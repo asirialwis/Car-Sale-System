@@ -28,7 +28,6 @@ const getCar = async (req, res) => {
     .find({ carModel: { $regex: searchmodel, $options: "i" } })
     .toArray();
 
-  
   if (result) {
     res.status(200).json(result);
   } else {
@@ -36,4 +35,24 @@ const getCar = async (req, res) => {
   }
 };
 
-module.exports = { addCar, getCar };
+const updateCar = async (req, res) => {
+  let userid = req.params.id;
+
+  const { carNumber, carModel, madeYear } = req.body;
+
+  const updatestates = {
+    carNumber,
+    carModel,
+    madeYear,
+  };
+
+  try {
+    const update = await Car.findByIdAndUpdate(userid, updatestates);
+    res.status(200).json({ status: "Successfully Updated" });
+  } catch (error) {
+    res.status(404).json({ status: "error" });
+    console.log(error);
+  }
+};
+
+module.exports = { addCar, getCar, updateCar };
