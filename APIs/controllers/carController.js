@@ -21,6 +21,16 @@ const addCar = async (req, res) => {
     });
 };
 
+const getAllCars = async (req, res) => {
+  await Car.find()
+    .then((cars) => {
+      res.json(cars);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 const getCar = async (req, res) => {
   let searchmodel = req.params.carModel;
 
@@ -55,4 +65,4 @@ const updateCar = async (req, res) => {
   }
 };
 
-module.exports = { addCar, getCar, updateCar };
+module.exports = { addCar, getCar, updateCar ,getAllCars};
